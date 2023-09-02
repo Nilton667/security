@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import createError from 'http-errors'
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
@@ -14,14 +13,8 @@ declare module 'express' {
   }
 }
 
-
 // view engine setup
-if(process.env.TYPE == 'prodution'){
-  app.set('views', path.join(__dirname, '../views'));
-}else{
-  app.set('views', path.join(__dirname, 'views'));
-}
-
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
@@ -29,11 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-if(process.env.TYPE == 'prodution'){
-  app.use(express.static(path.join(__dirname, '../public')));
-}else{
-  app.use(express.static(path.join(__dirname, 'public')));
-}
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Home
 import index from './routes/index'
