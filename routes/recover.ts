@@ -1,28 +1,16 @@
 import express from 'express'
 var router = express.Router();
-import authClass from '../class/auth'
+import recoverClass from '../class/recover'
 import { Request, Response, NextFunction } from 'express'
-const auth = new authClass();
+const recover = new recoverClass();
 
-router.post('/recover/email', async (req: Request, res: Response, next: NextFunction) => {
-    let result = await auth.recoverEmail(req.body.email ?? '');
-    return res.json(result);
-});
-
-router.post('/recover/reenvia', async (req: Request, res: Response, next: NextFunction) => {
-
-    let result = await auth.recoverReenviar(
-        {
-            nome: req.body.nome ?? '',
-            email: req.body.email ?? '',
-            keycode: req.body.keycode ?? '',
-        }
-    );
+router.post('/recover/telemovel', async (req: Request, res: Response, next: NextFunction) => {
+    let result = await recover.recoverPhone(req.body.telemovel ?? '');
     return res.json(result);
 });
 
 router.post('/recover/token', async (req: Request, res: Response, next: NextFunction) => {
-    let result = await auth.recoverToken(
+    let result = await recover.recoverToken(
         {
             token: req.body.token ?? '',
             keycode: req.body.keycode ?? '',
@@ -32,13 +20,13 @@ router.post('/recover/token', async (req: Request, res: Response, next: NextFunc
 });
 
 router.post('/recover/update/password', async (req: Request, res: Response, next: NextFunction) => {
-    let result = await auth.recoverPassword(
+    let result = await recover.recoverPassword(
         {
-            email: req.body.email, 
+            phone: req.body.telemovel, 
             password: req.body.password, 
             token: req.body.token, 
             keycode: req.body.keycode,
-            dispositivo: req.body.dispositivo
+            device: req.body.dispositivo
         }
     );
     return res.json(result);

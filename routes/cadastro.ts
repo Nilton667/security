@@ -2,45 +2,33 @@ import express from 'express';
 var router = express.Router();
 import { Request, Response, NextFunction } from 'express';
 
-import authClass from '../class/auth'
-const auth = new authClass();
+import cadastroClass from '../class/cadastro'
+const cadastro = new cadastroClass();
 
-router.post('/cadastro/email', async (req: Request, res: Response, next: NextFunction) => {
-  let result = await auth.emailConfirm(
+router.post('/cadastro/telemovel', async (req: Request, res: Response, next: NextFunction) => {
+  let result = await cadastro.phoneConfirm(
     {
-      nome: req.body.nome ?? '',
-      email: req.body.email ?? ''
+      name: req.body.nome ?? '',
+      phone: req.body.telemovel ?? ''
     }
   );
   return res.json(result);
 })
 
-router.post('/cadastro/reenvia', async (req, res, next: NextFunction) => {
-  let result = await auth.reenviaEmail(
-    {
-      nome: req.body.nome ?? '',
-      email: req.body.email ?? '',
-      keycode: req.body.keycode ?? '',
-    }
-  );
-  return res.json(result);
-});
-
 router.post('/cadastro/user', async (req: Request, res: Response, next: NextFunction) => {
-  let result = await auth.cadastro(
+  let result = await cadastro.cadastro(
     {
-      nome: req.body.nome ?? '',
-      sobrenome: req.body.sobrenome ?? '',
+      name: req.body.nome ?? '',
+      surname: req.body.sobrenome ?? '',
       email: req.body.email ?? '',
-      nacionalidade: req.body.nacionalidade ?? '',
+      nationality: req.body.nacionalidade ?? '',
       countrycode: req.body.countrycode ?? '',
-      genero: req.body.genero ?? '',
-      identificacao: req.body.identificacao ?? '',
-      telemovel: req.body.telemovel ?? '',
-      morada: req.body.morada ?? '',
+      gender: req.body.genero ?? '',
+      identification: req.body.identificacao ?? '',
+      phone: req.body.telemovel ?? '',
       zipcode: req.body.zipcode ?? '',
       password: req.body.password ?? '',
-      dispositivo: req.body.dispositivo ?? '',
+      device: req.body.dispositivo ?? '',
     }
   );
   return res.json(result);

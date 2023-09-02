@@ -52,17 +52,14 @@ app.use(token);
 import perfil from './routes/perfil'
 app.use(perfil)
 
-import pagamentos from './routes/pagamentos'
-app.use(pagamentos)
+import address from './routes/address'
+app.use(address)
 
-import carregamento from './routes/carregamento'
-app.use(carregamento)
+import card from './routes/card'
+app.use(card)
 
 import feedback from './routes/feedback'
 app.use(feedback)
-
-import online from './routes/online'
-app.use(online)
 
 import historico from './routes/historico'
 app.use(historico)

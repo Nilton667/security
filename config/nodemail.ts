@@ -1,19 +1,33 @@
 import nodemailer from "nodemailer"
 
 let configOptions = {
-    host: 'mail.construvision.ao',
+    host: 'mail.diversus.ao',
     port: 465,
     secure: true,
     secureConnection: true,
     auth: {
-      user: 'geral@construvision.ao',
-      pass: 'nnTTvision2022!',
+      user: 'nilton.manuel@diversus.ao',
+      pass: 'DVnilton2000',
     },
     tls: {
-        rejectUnauthorized: false
+      rejectUnauthorized: false
     }
 };
 
-let transporter = nodemailer.createTransport(configOptions);
+let Transporter = nodemailer.createTransport(configOptions);
 
-export default transporter;
+async function SendEmail({to, text} : {to: string, text: string}){
+  try {
+    const info = await nodemailer.createTransport(configOptions).sendMail({
+      from: '"Horizon" <geral@diversus.ao>',
+      to: to,
+      subject: "HorizonPay",
+      text: text,
+    });
+    console.log("Message sent: %s", info.messageId);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export {Transporter, SendEmail};

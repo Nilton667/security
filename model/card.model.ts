@@ -1,0 +1,16 @@
+export default interface CardModel {
+    id?: number, 
+    user_id?: number, 
+    name?: string,
+    address_id?: number,
+    type?: string, 
+    card_number?: number, 
+    expiry_date?: string,
+    cvv_code?: number,
+    currency?: string, 
+    mnemonic?: string,
+    private_key?: string,
+    public_key?: string,
+    balance?: number, 
+    registration?: string,
+}

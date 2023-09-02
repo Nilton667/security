@@ -8,9 +8,9 @@ router.post('/feedback/add', async (req: Request, res: Response, next: NextFunct
     let result = await feedback.add(
         {
             id: req.body.id, 
-            nome: req.body.nome, 
+            name: req.body.nome, 
             email: req.body.email, 
-            mensagem: req.body.mensagem
+            message: req.body.mensagem
         }
     );
     return res.json(result);

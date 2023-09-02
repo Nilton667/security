@@ -1,25 +1,47 @@
 import sequelize from '../config/db';
 import { QueryTypes } from 'sequelize';
+import FeedbackModel from './../model/feedback.model';
+import ResponseModel from './../model/response.model';
 
 export default class Historico{
-    async add({id, nome, email, mensagem}:{id: number, nome: string, email: string, mensagem: string}){
+    async add({id, name, email, message} : FeedbackModel) : Promise<ResponseModel>{
         try {
             
-            var query = "INSERT INTO feedback (id_usuario, nome, email, mensagem) VALUES (:id, :nome, :email, :mensagem)";
+            var query = "INSERT INTO feedback (user_id, name, email, message) VALUES (:user_id, :name, :email, :message)";
 
             var insert = await sequelize.query(query,
                 {
-                    replacements: {id: id, nome: nome, email: email, mensagem: mensagem},
+                    replacements: {
+                        user_id: id, 
+                        name: name, 
+                        email: email, 
+                        message: message
+                    },
                     type: QueryTypes.INSERT
                 }
             );
 
             if(insert.length > 0 && insert[1] == 1){
-                return 1;
+                return <ResponseModel>{
+                    result: {
+                        success: true,
+                        data: 'Feedback enviado com sucesso!',
+                    }
+                };
             }
-            return 0;
-        } catch (error) {
-            return error;
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: 'Não foi possível enviar o feedback!',
+                }
+            };
+        } catch (error: any) {
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: error.message,
+                }
+            };
         }
     }
 }
