@@ -67,6 +67,9 @@ app.use(historico)
 import session from './routes/session'
 app.use(session)
 
+import consulta from './routes/consulta'
+app.use(consulta)
+
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404));

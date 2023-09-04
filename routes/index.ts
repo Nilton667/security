@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req: Request, res: any, next: NextFunction) => {
-  res.render('index', { title: 'HorizonPay', description: ''});
+  res.render('index', { title: 'Security', description: ''});
 });
 
 export default router

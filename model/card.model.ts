@@ -1,6 +1,7 @@
 export default interface CardModel {
     id?: number, 
     user_id?: number, 
+    bank?: string,
     name?: string,
     address_id?: number,
     type?: string, 

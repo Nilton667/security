@@ -4,7 +4,7 @@ var router = express.Router();
 import historicoClass from '../class/historico'
 const historico = new historicoClass();
 
-router.post('/historico/transacoes', async (req: Request, res: Response, next: NextFunction) => {
+router.post('/historic', async (req: Request, res: Response, next: NextFunction) => {
     let result = await historico.atividades(
         {
             id: req.body.id, 

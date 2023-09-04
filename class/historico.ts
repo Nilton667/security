@@ -1,14 +1,15 @@
 import sequelize from '../config/db';
 import { QueryTypes } from 'sequelize';
+import ResponseModel from '../model/response.model';
 
 export default class Historico{
     async atividades({id, limite}:{id: number, limite: number}){
         try {
             
             if (limite == 0){
-                var query = "SELECT * from historico WHERE id_usuario = :id ORDER BY id DESC LIMIT 15";
+                var query = "SELECT * from historic WHERE user_id = :id ORDER BY id DESC LIMIT 15";
             }else{
-                var query = "SELECT * from historico WHERE id < :limite AND id_usuario = :id ORDER BY id DESC LIMIT 15";
+                var query = "SELECT * from historic WHERE id < :limite AND user_id = :id ORDER BY id DESC LIMIT 15";
             }
 
             var select = await sequelize.query(query,
@@ -19,11 +20,27 @@ export default class Historico{
             );
 
             if(select.length > 0){
-                return select;
+                return <ResponseModel>{
+                    result: {
+                        success: true,
+                        data: select,
+                    }
+                };
             }
-            return 0;
-        } catch (error) {
-            return error;
+
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: 'Nenhum resultado encontrado!',
+                }
+            };
+        } catch (error: any) {
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: error.message,
+                }
+            };
         }
     }
 }
