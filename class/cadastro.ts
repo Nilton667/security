@@ -55,6 +55,7 @@ export default class Cadastro extends Login{
 
     async cadastro(
         {
+            image,
             name, 
             surname, 
             email, 
@@ -62,7 +63,8 @@ export default class Cadastro extends Login{
             countrycode, 
             gender, 
             identification, 
-            phone, 
+            phone,
+            emergency_number, 
             zipcode, 
             password,
             device,
@@ -87,9 +89,10 @@ export default class Cadastro extends Login{
                 const salt = bcrypt.genSaltSync(parseInt(process.env.SALT as string));
                 const hash = bcrypt.hashSync(password!, salt);
 
-                var insert = await sequelize.query('INSERT INTO users (name, surname, email, countrycode, gender, identification, phone, nationality, zipcode, password) VALUES (:name, :surname, :email, :countrycode, :gender, :identification, :phone, :nationality, :zipcode, :password)',
+                var insert = await sequelize.query('INSERT INTO users (image, name, surname, email, countrycode, gender, identification, phone, emergency_number, nationality, zipcode, password) VALUES (:image, :name, :surname, :email, :countrycode, :gender, :identification, :phone, :emergency_number, :nationality, :zipcode, :password)',
                     {
                         replacements: {
+                            image: image,
                             name: name, 
                             surname: surname, 
                             email: email, 
@@ -97,6 +100,7 @@ export default class Cadastro extends Login{
                             gender: gender, 
                             identification: identification, 
                             phone: phone, 
+                            emergency_number: emergency_number,
                             nationality: nationality,
                             zipcode: zipcode, 
                             password: hash,
@@ -120,6 +124,7 @@ export default class Cadastro extends Login{
                 };
             }
         } catch (error: any) {
+            console.log(error.message)
             return <ResponseModel>{
                 result: {
                     success: false,

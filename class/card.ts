@@ -143,4 +143,85 @@ export default class Online{
             };
         }
     }
+
+    async getPassword({id_card} : {id_card: number}){
+        try {
+            
+            var query = "SELECT * FROM password WHERE id_card = :id_card ORDER BY id DESC Limit 1";
+        
+            var select = await sequelize.query(query,
+                {
+                    replacements: {
+                        id_card: id_card,
+                    },
+                    type: QueryTypes.SELECT
+                }
+            );
+
+            if(select.length > 0){
+                return <ResponseModel>{
+                    result: {
+                        success: true,
+                        data: select[0],
+                    }
+                };
+            }
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: 'Nenhuma senha activa!',
+                }
+            };
+        } catch (error: any) {
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: error.message,
+                }
+            };
+        }
+    }
+
+    async setPassword({id_card, password}:{id_card: number, password: number}){
+        try {
+
+            var time = Date.now();
+            
+            var query = "INSERT INTO password (id_card, time, password) VALUES (:id_card, :time, :password)";
+        
+            var insert = await sequelize.query(query,
+                {
+                    replacements: {
+                        id_card: id_card,
+                        password: password,
+                        time: time,
+                    },
+                    type: QueryTypes.INSERT
+                }
+            );
+
+            if(insert.length > 0 && insert[1] == 1){
+                return <ResponseModel>{
+                    result: {
+                        success: true,
+                        data: insert,
+                    }
+                };
+            }
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: 'Não foi possível registar a senha!',
+                }
+            };
+        } catch (error: any) {
+            console.log(error.message)
+            return <ResponseModel>{
+                result: {
+                    success: false,
+                    error: error.message,
+                }
+            };
+        }
+    }
 }

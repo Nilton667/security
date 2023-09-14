@@ -46,4 +46,23 @@ router.post('/card/update', async (req: Request, res: Response, next: NextFuncti
     return res.json(result);
 });
 
+router.post('/card/set/password', async (req: Request, res: Response, next: NextFunction) => {
+    let result = await card.setPassword(
+        {
+            id_card: req.body.id_card, 
+            password: req.body.password, 
+        }
+    );
+    return res.json(result);
+});
+
+router.post('/card/password', async (req: Request, res: Response, next: NextFunction) => {
+    let result = await card.getPassword(
+        {
+            id_card: req.body.id_card, 
+        }
+    );
+    return res.json(result);
+});
+
 export default router;

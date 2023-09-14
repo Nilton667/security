@@ -6,6 +6,7 @@ export default interface UserDataModel {
     email?: string,
     countrycode?: number,
     phone?: string,
+    emergency_number?: string,
     nationality?: string,
     zipcode?: string,
     gender?: string,
